@@ -1,21 +1,16 @@
 import React from 'react';
+import Button, { ButtonType, ButtonSize } from './components/Button/Button'
 
 const App: React.FC = () => {
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Button disabled>Hello</Button>
+        <Button onClick={(e) => {e.preventDefault(); alert(124)}}>Hello</Button>
+        <Button btnType={ButtonType.Primary} size={ButtonSize.Small}>Hello</Button>
+        <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>Hello</Button>
+        <Button btnType={ButtonType.Link} size={ButtonSize.Small} href="#">Hello</Button>
       </header>
     </div>
   );
