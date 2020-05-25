@@ -51,6 +51,6 @@ describe('测试Button组件', () => {
     expect(element).toBeInTheDocument()
     expect(element.disabled).toBeTruthy()  // 测试是否为真
     fireEvent.click(element)         // 测试click事件
-    expect(disableProps.onClick).not.toHaveBeenCalled()  // 没有被调用
+    expect(disableProps.onClick).not.toHaveBeenCalled()  // 没有被调用时
   })
 })
