@@ -5,12 +5,12 @@ import Menu, {MenuProps} from './menu'
 import MenuItem from './menuItem'
 
 const testProps: MenuProps = {
-  defaultIndex: 0,
+  defaultIndex: '0',
   onSelect: jest.fn(),
   className: 'test',
 }
 const testVerProps: MenuProps = {
-  defaultIndex: 0,
+  defaultIndex: '0',
   mode: 'vertical',
 }
 const generateMenu = (props: MenuProps) => {
@@ -43,7 +43,7 @@ describe('测试 Menu 和 MenuItem 组件', () => {
     fireEvent.click(thirdItem)
     expect(thirdItem).toHaveClass('is-active')
     expect(activeElement).not.toHaveClass('is-active')
-    expect(testProps.onSelect).toHaveBeenCalledWith(2)
+    expect(testProps.onSelect).toHaveBeenCalledWith('2')
     fireEvent.click(disabledElement)
     expect(disabledElement).not.toHaveClass('is-active')
     expect(testProps.onSelect).not.toHaveBeenCalledWith(1)

@@ -9,7 +9,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Menu defaultIndex={0} onSelect={(e) => {console.log(e, 'click');}} mode="horizontal">
+        <Menu defaultIndex='0' onSelect={(e) => {console.log(e, 'click');}} mode="vertical" defaultOpenSubMenus={['2']}>
           <MenuItem>cool link1</MenuItem>
           <MenuItem disabled>cool link2</MenuItem>
           <SubMenu title="dropdown">
