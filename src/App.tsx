@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Button, { ButtonType, ButtonSize } from './components/Button/Button'
@@ -7,6 +7,7 @@ import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
 import Icon from './components/Icon/icon'
 import classes from '*.module.css';
+import Transition from './components/Transition/transition'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
@@ -14,7 +15,7 @@ library.add(fas)
 
 
 const App: React.FC = () => {
-
+  const [show, setShow] = useState(false)
   return (
     <div className="App">
       <header className="App-header">
@@ -28,6 +29,18 @@ const App: React.FC = () => {
           </SubMenu>
           <MenuItem >cool link3</MenuItem>
         </Menu>
+        <Button size="lg" onClick={() => { setShow(!show) }}>Toogle</Button>
+        <Transition in={show} timeout={300} animation="zoom-in-left">
+          <div>
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+            <p>123</p>
+          </div>
+        </Transition>
+        <Transition in={show} timeout={300} animation="zoom-in-top" wrapper>
+          <Button btnType="primary" size="lg">A Large Button</Button>
+        </Transition>
         {/* <Icon icon="arrow-down" theme="primary" size="10x"></Icon> */}
       </header>
     </div>

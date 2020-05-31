@@ -9,8 +9,8 @@ const defaultProps = {
 
 // 测试button的大小和状态
 const testProps: ButtonProps = {
-  btnType: ButtonType.Primary,
-  size: ButtonSize.Large,
+  btnType: 'primary',
+  size: 'lg',
   className: 'klass'
 }
 
@@ -39,7 +39,7 @@ describe('测试Button组件111', () => {
     expect(element).toHaveClass('btn-primary btn-lg klass')
   })
   it('测试是否为<a></a>链接', () => {
-    const wrapper = render(<Button btnType={ButtonType.Link} href="http://durminUrl">Link</Button>)
+    const wrapper = render(<Button btnType="link" href="http://durminUrl">Link</Button>)
     const element = wrapper.getByText('Link')
     expect(element).toBeInTheDocument()
     expect(element.tagName).toEqual('A') // 测试是否是button组件
