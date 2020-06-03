@@ -1563,7 +1563,7 @@
     qs "^6.6.0"
     ts-dedent "^1.1.0"
 
-"@storybook/addons@5.3.19", "@storybook/addons@^5.3.19":
+"@storybook/addons@5.3.19", "@storybook/addons@^5.2.0", "@storybook/addons@^5.3.19":
   version "5.3.19"
   resolved "https://registry.npm.taobao.org/@storybook/addons/download/@storybook/addons-5.3.19.tgz#3a7010697afd6df9a41b8c8a7351d9a06ff490a4"
   integrity sha1-OnAQaXr9bfmkG4yKc1HZoG/0kKQ=
@@ -1795,7 +1795,7 @@
     react-docgen-typescript-loader "^3.7.2"
     semver "^7.3.2"
 
-"@storybook/react@^5.3.19":
+"@storybook/react@^5.2.0", "@storybook/react@^5.3.19":
   version "5.3.19"
   resolved "https://registry.npm.taobao.org/@storybook/react/download/@storybook/react-5.3.19.tgz#ad7e7a5538399e2794cdb5a1b844a2b77c10bd09"
   integrity sha1-rX56VTg5nieUzbWhuESit3wQvQk=
@@ -2242,6 +2242,15 @@
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha1-CoUdO9lkmPolwzq3J47TvWXwbD4=
+
+"@types/storybook__addon-info@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.npm.taobao.org/@types/storybook__addon-info/download/@types/storybook__addon-info-5.2.1.tgz#be6fb8c670ec6afc1fa36f313fb7978040e10618"
+  integrity sha1-vm+4xnDsavwfo28xP7eXgEDhBhg=
+  dependencies:
+    "@storybook/addons" "^5.2.0"
+    "@storybook/react" "^5.2.0"
+    "@types/react" "*"
 
 "@types/tapable@*", "@types/tapable@^1.0.5":
   version "1.0.5"

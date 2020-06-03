@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { type } from 'os'
+// import { type } from 'os'
 // 用字符串字面量区分
 export type ButtonSize = 'lg' | 'sm'
 
