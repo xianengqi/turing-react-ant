@@ -1,5 +1,5 @@
 module.exports = {
-  stories: ['../src/**/*.stories.tsx'],
+  stories: ['../src/**/*.stories.@(ts|js)'],
   addons: [
     '@storybook/preset-create-react-app',
     '@storybook/addon-actions',
@@ -13,11 +13,12 @@ module.exports = {
           loader: require.resolve("react-docgen-typescript-loader"),
           options: {
             shouldExtractLiteralValuesFromEnum: true,
-            propFilter: (prop) => {
+            propFilter: prop => {
+              console.log('我的 =>', prop)
               if (prop.parent) {
                 return !prop.parent.fileName.includes('node_modules')
               }
-              return true
+              return true            
             }
           }
         }
