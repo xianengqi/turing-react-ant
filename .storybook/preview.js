@@ -34,14 +34,7 @@ const loaderFn = () => {
     // require('../src/welcome.stories.tsx'),
     require('../src/components/Button/Button.stories.tsx'),
     require('../src/components/Menu/menu.stories.tsx'),
-    // require('../src/components/Alert/alert.stories.tsx'),
-    // require('../src/components/Menu/menu.stories.tsx'),
-    // require('../src/components/Tabs/tabs.stories.tsx'),
-    // require('../src/components/Icon/icon.stories.tsx'),
-    // require('../src/components/Input/input.stories.tsx'),
-    // require('../src/components/AutoComplete/autoComplete.stories.tsx'),
-    // require('../src/components/Select/select.stories.tsx'),
-    // require('../src/components/Upload/upload.stories.tsx'),
+    require('../src/components/Input/input.stories')
   ]
 }
 
