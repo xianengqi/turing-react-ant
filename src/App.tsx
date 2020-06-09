@@ -1,48 +1,26 @@
-import React, {useState} from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import Button, { ButtonType, ButtonSize } from './components/Button/Button'
-import Menu from './components/Menu/menu'
-import MenuItem from './components/Menu/menuItem'
-import SubMenu from './components/Menu/subMenu'
-import Icon from './components/Icon/icon'
-import classes from '*.module.css';
-import Transition from './components/Transition/transition'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
-
-
+import React, {useState, useEffect, ChangeEvent} from 'react';
+import axios from 'axios'
 
 const App: React.FC = () => {
-  const [show, setShow] = useState(false)
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const uploadFile = files[0]
+      const formData = new FormData()
+      formData.append(uploadFile.name, uploadFile)
+      axios.post('https://my-json-server.typicode.com/xianengqi/myJsonServer/posts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(resp => {
+        console.log(resp);
+        
+      })
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <Menu defaultIndex='0' onSelect={(e) => {console.log(e, 'click');}}  defaultOpenSubMenus={['2']}>
-          <MenuItem>cool link1</MenuItem>
-          <MenuItem disabled>cool link2</MenuItem>
-          <SubMenu title="dropdown">
-            <MenuItem>dropdown1</MenuItem>
-            <MenuItem>dropdown2</MenuItem>
-            <MenuItem>dropdown3</MenuItem>
-          </SubMenu>
-          <MenuItem >cool link3</MenuItem>
-        </Menu>
-        <Button size="lg" onClick={() => { setShow(!show) }}>Toogle</Button>
-        <Transition in={show} timeout={300} animation="zoom-in-left">
-          <div>
-            <p>123</p>
-            <p>123</p>
-            <p>123</p>
-            <p>123</p>
-          </div>
-        </Transition>
-        <Transition in={show} timeout={300} animation="zoom-in-top" wrapper>
-          <Button btnType="primary" size="lg">A Large Button</Button>
-        </Transition>
-        {/* <Icon icon="arrow-down" theme="primary" size="10x"></Icon> */}
-      </header>
+    <div className="App" style={{marginTop: '100px', marginLeft: '100px'}}>
+      <input type="file" name="myFile" onChange={handleFileChange} />
     </div>
   );
 }
