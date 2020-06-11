@@ -35,7 +35,8 @@ const loaderFn = () => {
     require('../src/components/Button/Button.stories.tsx'),
     require('../src/components/Menu/menu.stories.tsx'),
     require('../src/components/Input/input.stories.tsx'),
-    require('../src/components/AutoComplete/autoComplete.stories.tsx')
+    require('../src/components/AutoComplete/autoComplete.stories.tsx'),
+    require('../src/components/Upload/upload.stories.tsx'),
   ]
 }
 
