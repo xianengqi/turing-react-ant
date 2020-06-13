@@ -1,10 +1,11 @@
-import React, { FC, useRef, ChangeEvent, useState } from "react";
+import React, { FC, useRef, ChangeEvent, useState, Children } from "react";
 import axios from "axios";
 
-import UploadList from './uploadList'
+import UploadList from "./uploadList";
 import Button from "../Button/Button";
+import Dragger from "./dragger";
 
-export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error';
+export type UploadFileStatus = "ready" | "uploading" | "success" | "error";
 export interface UploadFile {
   uid: string;
   size: number;
@@ -24,6 +25,13 @@ export interface UploadProps {
   onError?: (err: any, file: File) => void;
   onChange?: (file: File) => void;
   onRemove?: (file: UploadFile) => void;
+  headers?: { [key: string]: any };
+  name?: string;
+  data?: { [key: string]: any };
+  withCredentials?: boolean;
+  accept?: string;
+  multiple?: boolean;
+  drag?: boolean;
 }
 
 export const Upload: FC<UploadProps> = (props) => {
@@ -36,20 +44,32 @@ export const Upload: FC<UploadProps> = (props) => {
     onError,
     onChange,
     onRemove,
+    headers,
+    name,
+    data,
+    withCredentials,
+    accept,
+    multiple,
+    children,
+    drag,
   } = props;
   const fileInput = useRef<HTMLInputElement>(null);
-  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || [])
-  const updateFileList = (updateFile: UploadFile, updateObj: Partial<UploadFile>) => { // `Partial` =>  表示可以更新这里面的任何几项
-    setFileList(prevList => {
-      return prevList.map(file => {
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
+  const updateFileList = (
+    updateFile: UploadFile,
+    updateObj: Partial<UploadFile>
+  ) => {
+    // `Partial` =>  表示可以更新这里面的任何几项
+    setFileList((prevList) => {
+      return prevList.map((file) => {
         if (file.uid === updateFile.uid) {
-          return { ...file, ...updateObj }
+          return { ...file, ...updateObj };
         } else {
-          return file
+          return file;
         }
-      })
-    })
-  }
+      });
+    });
+  };
   const handleClick = () => {
     if (fileInput.current) {
       fileInput.current.click();
@@ -67,12 +87,12 @@ export const Upload: FC<UploadProps> = (props) => {
   };
   const handleRemove = (file: UploadFile) => {
     setFileList((prevList) => {
-      return prevList.filter(item => item.uid !== file.uid)
-    })
+      return prevList.filter((item) => item.uid !== file.uid);
+    });
     if (onRemove) {
-      onRemove(file)
+      onRemove(file);
     }
-  }
+  };
   const uploadFiles = (files: FileList) => {
     let postFiles = Array.from(files);
     postFiles.forEach((file) => {
@@ -92,27 +112,37 @@ export const Upload: FC<UploadProps> = (props) => {
   };
   const post = (file: File) => {
     let _file: UploadFile = {
-      uid: Date.now() + 'upload-file',
-      status: 'ready',
+      uid: Date.now() + "upload-file",
+      status: "ready",
       name: file.name,
       size: file.size,
       percent: 0,
       raw: file,
-    }
-    setFileList([_file, ...fileList])
+    };
+    // setFileList([_file, ...fileList]);
+    setFileList((prevList) => {
+      return [_file, ...prevList];
+    });
     const formData = new FormData();
-    formData.append(file.name, file);
+    formData.append(name || "file", file);
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+    }
     axios
       .post(action, formData, {
         headers: {
+          ...headers,
           "Content-Type": "multipart/form-data",
           // "Access-Control-Allow-Origin":  'http://localhost:9009'
         },
+        withCredentials,
         onUploadProgress: (e) => {
           // 上传的百分比
           let percentage = Math.round((e.loaded * 100) / e.total) || 0;
           if (percentage < 100) {
-            updateFileList(_file, {percent: percentage, status: 'uploading'})
+            updateFileList(_file, { percent: percentage, status: "uploading" });
             if (onProgress) {
               onProgress(percentage, file);
             }
@@ -121,41 +151,54 @@ export const Upload: FC<UploadProps> = (props) => {
       })
       .then((resp) => {
         console.log(resp);
-        updateFileList(_file, {status: 'success', response: resp.data})
+        updateFileList(_file, { status: "success", response: resp.data });
         if (onSuccess) {
           onSuccess(resp.data, file);
         }
         if (onChange) {
-          onChange(file)
+          onChange(file);
         }
       })
       .catch((err) => {
         console.error(err);
-        updateFileList(_file, {status:'error', error: err})
+        updateFileList(_file, { status: "error", error: err });
         if (onError) {
           onError(err, file);
         }
         if (onChange) {
-          onChange(file)
+          onChange(file);
         }
       });
   };
-  console.log('上传开始 => ', fileList);
+  console.log("上传开始 => ", fileList);
   return (
     <div className="viking-upload-component">
-      <Button onClick={handleClick} btnType="primary">
+      {/* <Button onClick={handleClick} btnType="primary">
         Upload File
-      </Button>
-      <input
-        className="viking-file-input"
-        style={{ display: "none" }}
-        ref={fileInput}
-        onChange={handleFileChange}
-        type="file"
-      />
-      <UploadList fileList={fileList} onRemove={handleRemove} />
+      </Button> */}
+      <div
+        className="viking-upload-input"
+        style={{ display: "inline-block" }}
+        onClick={handleClick}
+      >
+        {drag ? <Dragger onFile={(files) => {uploadFiles(files)}}>{children}</Dragger> : children}
+        <input
+          className="viking-file-input"
+          style={{ display: "none" }}
+          ref={fileInput}
+          onChange={handleFileChange}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+        />
+      </div>
+
+      {/* <UploadList fileList={fileList} onRemove={handleRemove} /> */}
     </div>
   );
 };
 
+Upload.defaultProps = {
+  name: "file",
+};
 export default Upload;
