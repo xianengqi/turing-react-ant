@@ -14,7 +14,7 @@ module.exports = {
           options: {
             shouldExtractLiteralValuesFromEnum: true,
             propFilter: prop => {
-              console.log('我的 =>', prop)
+              // console.log('我的 =>', prop)
               if (prop.parent) {
                 return !prop.parent.fileName.includes('node_modules')
               }
