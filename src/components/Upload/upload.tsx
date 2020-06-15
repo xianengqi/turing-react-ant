@@ -193,7 +193,7 @@ export const Upload: FC<UploadProps> = (props) => {
         />
       </div>
 
-      {/* <UploadList fileList={fileList} onRemove={handleRemove} /> */}
+      <UploadList fileList={fileList} onRemove={handleRemove} />
     </div>
   );
 };
